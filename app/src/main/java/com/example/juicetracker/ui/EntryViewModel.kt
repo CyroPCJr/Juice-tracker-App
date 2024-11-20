@@ -35,7 +35,7 @@ class EntryViewModel(private val juiceRepository: JuiceRepository) : ViewModel()
         name: String,
         description: String,
         color: String,
-        rating: Int
+        rating: Int,
     ) {
         val juice = Juice(id, name, description, color, rating)
         viewModelScope.launch {

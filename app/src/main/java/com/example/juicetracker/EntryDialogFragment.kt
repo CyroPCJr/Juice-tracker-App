@@ -49,7 +49,7 @@ class EntryDialogFragment : BottomSheetDialogFragment() {
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View {
         return FragmentEntryDialogBinding.inflate(inflater, container, false).root
     }
@@ -57,7 +57,7 @@ class EntryDialogFragment : BottomSheetDialogFragment() {
     @SuppressLint("SetTextI18n")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 
-        val colorLabelMap = JuiceColor.values().associateBy { getString(it.label) }
+        val colorLabelMap = JuiceColor.entries.associateBy { getString(it.label) }
         val binding = FragmentEntryDialogBinding.bind(view)
         val args: EntryDialogFragmentArgs by navArgs()
         val juiceId = args.itemId
@@ -69,7 +69,7 @@ class EntryDialogFragment : BottomSheetDialogFragment() {
             viewLifecycleOwner.lifecycleScope.launch {
                 repeatOnLifecycle(Lifecycle.State.STARTED) {
                     entryViewModel.getJuiceStream(args.itemId).filterNotNull().collect { item ->
-                        with(binding){
+                        with(binding) {
                             name.setText(item.name)
                             description.setText(item.description)
                             ratingBar.rating = item.rating.toFloat()
@@ -82,7 +82,7 @@ class EntryDialogFragment : BottomSheetDialogFragment() {
 
         binding.name.doOnTextChanged { _, start, _, count ->
             // Enable Save button if the current text is longer than 3 characters
-            binding.saveButton.isEnabled = (start+count) > 0
+            binding.saveButton.isEnabled = (start + count) > 0
         }
         binding.colorSpinner.adapter = ArrayAdapter(
             requireContext(),
@@ -125,6 +125,6 @@ class EntryDialogFragment : BottomSheetDialogFragment() {
 
     private fun findColorIndex(color: String): Int {
         val juiceColor = JuiceColor.valueOf(color)
-        return JuiceColor.values().indexOf(juiceColor)
+        return JuiceColor.entries.indexOf(juiceColor)
     }
 }

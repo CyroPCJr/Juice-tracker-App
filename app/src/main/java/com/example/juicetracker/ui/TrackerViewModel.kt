@@ -25,7 +25,7 @@ import kotlinx.coroutines.launch
 /**
  * ViewModel to retrieve, delete a juice entry from the [JuiceRepository]'s data source.
  */
-class TrackerViewModel(private val juiceRepository: JuiceRepository): ViewModel()  {
+class TrackerViewModel(private val juiceRepository: JuiceRepository) : ViewModel() {
 
     val juicesStream: Flow<List<Juice>> = juiceRepository.juicesStream
 
