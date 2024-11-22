@@ -27,6 +27,7 @@ import androidx.compose.material3.BottomSheetScaffoldState
 import androidx.compose.material3.Button
 import androidx.compose.material3.Divider
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.MaterialTheme.colorScheme
 import androidx.compose.material3.OutlinedButton
@@ -44,6 +45,7 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
 import com.example.juicetracker.R
 import com.example.juicetracker.data.Juice
+import com.example.juicetracker.data.JuiceColor
 import com.example.juicetracker.ui.JuiceTrackerViewModel
 import java.util.Locale
 
@@ -87,7 +89,7 @@ fun SheetHeader(modifier: Modifier = Modifier) {
             text = stringResource(R.string.bottom_sheet_headline),
             style = MaterialTheme.typography.headlineSmall.copy(fontWeight = FontWeight.Bold)
         )
-        Divider()
+        HorizontalDivider()
     }
 }
 
@@ -109,6 +111,16 @@ fun SheetForm(
             inputLabel = stringResource(R.string.juice_description),
             fieldValue = juice.description,
             onValueChange = { description -> onUpdateJuice(juice.copy(description = description)) }
+        )
+        ColorSpinnerRow(
+            colorSpinnerPosition = findColorIndex(juice.color),
+            onColorChange = { color ->
+                onUpdateJuice(juice.copy(color = JuiceColor.entries[color].name))
+            }
+        )
+        RatingInputRow(
+            rating = juice.rating,
+            onRatingChange = { rating -> onUpdateJuice(juice.copy(rating = rating)) }
         )
         ButtonRow(
             modifier = Modifier.align(Alignment.CenterHorizontally),
